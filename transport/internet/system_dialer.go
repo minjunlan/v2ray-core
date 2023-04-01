@@ -72,6 +72,7 @@ func (d *DefaultSystemDialer) Dial(ctx context.Context, src net.Address, dest ne
 		LocalAddr: resolveSrcAddr(dest.Network, src),
 		KeepAlive: goStdKeepAlive,
 	}
+	dialer.SetMultipathTCP(true)
 
 	if sockopt != nil || len(d.controllers) > 0 {
 		dialer.Control = func(network, address string, c syscall.RawConn) error {

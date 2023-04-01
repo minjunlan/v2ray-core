@@ -47,6 +47,7 @@ func (dl *DefaultListener) Listen(ctx context.Context, addr net.Addr, sockopt *S
 	var network, address string
 	switch addr := addr.(type) {
 	case *net.TCPAddr:
+		lc.SetMultipathTCP(true)
 		network = addr.Network()
 		address = addr.String()
 		lc.Control = getControlFunc(ctx, sockopt, dl.controllers)

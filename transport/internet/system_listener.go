@@ -47,7 +47,7 @@ func (dl *DefaultListener) Listen(ctx context.Context, addr net.Addr, sockopt *S
 	var network, address string
 	switch addr := addr.(type) {
 	case *net.TCPAddr:
-		lc.SetMultipathTCP(true)
+
 		network = addr.Network()
 		address = addr.String()
 		lc.Control = getControlFunc(ctx, sockopt, dl.controllers)
@@ -78,7 +78,7 @@ func (dl *DefaultListener) Listen(ctx context.Context, addr net.Addr, sockopt *S
 			ctx = context.WithValue(ctx, address, locker) // nolint: revive,staticcheck
 		}
 	}
-
+	lc.SetMultipathTCP(true)
 	l, err = lc.Listen(ctx, network, address)
 	if sockopt != nil && sockopt.AcceptProxyProtocol {
 		policyFunc := func(upstream net.Addr) (proxyproto.Policy, error) { return proxyproto.REQUIRE, nil }
